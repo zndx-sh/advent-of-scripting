@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+source /etc/os-release
+
+cpuLoad=$(top -bn1 | grep load | awk '{printf "%.2f", $(NF-2)}')
+disk=$(df -h | awk '$NF=="/"{printf "%s/%sGB (%s)", $3,$2,$5}')
+memory=$(free -m | awk 'NR==2{printf "%s/%sMB (%.2f%%)", $3,$2,$3*100/$2}')
+header="========== System Health =========="
+
+printf "%s\n" "$header"
+printf "Host: %s" "$(hostname)"
+printf "OS: %s\n" "$PRETTY_NAME"
+printf "Uptime:%s" "$(uptime | cut -d ',' -f 1 )"
+printf "CPU Load: %s\n" "$cpuLoad"
+printf "Memory Usage: %s\n" "$memory"
+printf "Disk Usage: %s\n" "$disk"
+printf "%s\n" "$(date '+%m-%d-%Y_%H:%M')"

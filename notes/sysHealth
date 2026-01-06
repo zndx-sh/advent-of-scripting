@@ -1,0 +1,12 @@
+BASH:
+That was a hell of an experience. I didn’t expect this task in bash to be this difficult. I approached the problems thinking that there must be a system variable somewhere, and I can simply print it with minimal parsing, but that didn’t turn out to be the case. I had to use different commands and parse the specific columns using awk.
+- NF refers to the number of fields in the specific line
+- NR refers to the number of lines in the content; it updates every time awk reads a line.
+- The "free" command is used to view memory usage
+- The "top" command is basically Task Manager from Windows but in the terminal
+
+PYTHON:
+Apparently this took time because I had to import multiple packages, but you know it’s Python, so yeah, this was very easy relative to bash.
+
+GO:
+WTF, how do I implement this in Go? i will get back to this again.
