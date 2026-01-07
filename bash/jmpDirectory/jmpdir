@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+SOURCE_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+if [[ $1 == '-c' ]]; then
+	if [[ -n "$2" ]]; then
+		grep -q "^$2=" "$SOURCE_DIR/bookmarks" && { 
+			printf "%s\n" "bookmark already exists."
+			exit 1 
+		}
+		printf "%s=%s\n" "$2" "$PWD" >> "$SOURCE_DIR/bookmarks"
+	else
+		printf "%s\n" "bookmark name cannot be empty."
+		exit 1
+	fi
+elif [[ $1 == '-l' ]]; then
+	if [[ -s "$SOURCE_DIR/bookmarks" ]]; then
+		while IFS= read -r line; do
+			printf "%s\n" "$line"
+		done < "$SOURCE_DIR/bookmarks" 
+	else
+		printf "%s\n" "no bookmarks found."
+	fi
+elif [[ $1 == '-r' ]]; then
+	truncate -c -s 0 "$SOURCE_DIR/bookmarks"
+elif [[ ${1:0:1} != '-' ]]; then
+	declare -A bookmark
+	while IFS='=' read -r name dir; do
+		bookmark["$name"]="$dir"
+	done < "$SOURCE_DIR/bookmarks"
+	if [[ -n $1 ]]; then
+		cd -- "${bookmark[$1]}" 2> /dev/null || printf "%s\n" "bookmark not found."
+	else
+		printf "%s" "atleast one argument is required.\n"
+		exit 1
+	fi
+else
+	printf "%s %s\n" "illegal argument:" "$1"
+fi
+
