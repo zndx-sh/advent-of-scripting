@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+source arcfls.config
+ 
+dir="$(date '+%d-%m-%Y').logs"
+mkdir "$dir"
+
+find "${DIR_LIST[@]}" -type f -size "${SIZE_LIMIT}"M -mtime "$LAST_MODIFIED" -print0 | xargs -0 zip -r "$dir"
