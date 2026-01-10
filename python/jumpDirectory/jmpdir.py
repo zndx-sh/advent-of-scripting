@@ -16,7 +16,7 @@ if args.bookmark:
         for line in f:
             if line.startswith(f"{args.bookmark}="):
                 bkdir = line.split("=")[1][:-1]
-                print(bkdir) 
+               print(bkdir) 
 
 if args.create:
     with open(f"{SOURCE_DIR}/bookmarks", "a") as f:

@@ -1,8 +1,11 @@
 #!/usr/bin/env bash
 
-source arcfls.config
- 
-dir="$(date '+%d-%m-%Y').logs"
-mkdir "$dir"
+set -x
+SOURCE_DIR="$( cd -- "$(dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source "$SOURCE_DIR/arcfls.config"
 
-find "${DIR_LIST[@]}" -type f -size "${SIZE_LIMIT}"M -mtime "$LAST_MODIFIED" -print0 | xargs -0 zip -r "$dir"
+arcdir="$(date '+%d-%m-%Y_%H:%M')"
+mkdir "$arcdir"
+
+find "${DIR_LIST[@]}" -type f -size "$SIZE_LIMIT"M -mtime "$LAST_MODIFIED" -exec cp {} $arcdir ';'
+tar -czf "$arcdir.zip" "$arcdir"
