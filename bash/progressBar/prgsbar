@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+
+for((i=1; i < 52; i++)); do
+	item_proc=$i
+	total=51
+	prec_done=$((item_proc * 100 / total))
+	s='['
+	for((j=0; j < prec_done; j++)); do
+		s+='█'
+	done
+	for((k=prec_done; k<100; k++)); do
+		s+='▓'
+	done
+	s+=']'
+	echo -ne "$s\r"
+	sleep .1
+done
+
+
