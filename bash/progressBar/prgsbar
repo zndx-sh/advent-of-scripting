@@ -1,19 +1,23 @@
 #!/usr/bin/env bash
 
+GREEN=$'\e[0;32m'
+RESET=$'\e[0m'
 
 for((i=1; i < 52; i++)); do
 	item_proc=$i
 	total=51
+	width=50
 	prec_done=$((item_proc * 100 / total))
-	s='['
-	for((j=0; j < prec_done; j++)); do
+	bars=$(( prec_done * width / 100 ))
+	s='  '
+	for((j=0; j < bars; j++)); do
 		s+='█'
 	done
-	for((k=prec_done; k<100; k++)); do
+	for((k=bars; k < width; k++)); do
 		s+='▓'
 	done
-	s+=']'
-	echo -ne "$s\r"
+	s+=' '
+	echo -ne "$GREEN$s$RESET $prec_done%\r"
 	sleep .1
 done
 
